@@ -288,6 +288,9 @@ typedef enum PaHostApiTypeId
     paJACK=12,
     paWASAPI=13,
     paAudioScienceHPI=14
+#ifndef PA_CWASIO_ENABLE_ASIO_WRAPPER
+  , paCwASIO = 14
+#endif
 } PaHostApiTypeId;
 
 
