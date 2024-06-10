@@ -377,7 +377,7 @@ static cwASIOError cwASIOExit(void) {
 /* the following functions using inline assembler will fix this for the differenct platforms and compilers if necessary */
 #if INTPTR_MAX != INT64_MAX && defined(_WIN32) && (defined(_MSC_VER) || defined(__BCPLUSPLUS__) || defined(__BORLANDC__))
 /* 32 bit Windows platform and MSVC or Borland compiler */
-static cwASIOError cwASIOInit(struct cwASIODriverInfo *info) {
+__declspec(noinline) static cwASIOError cwASIOInit(struct cwASIODriverInfo *info) {
     if(!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     {
@@ -431,7 +431,7 @@ static cwASIOError cwASIOInit(struct cwASIODriverInfo *info) {
     return ASE_OK;
 }
 
-static cwASIOError cwASIOStart(void) {
+__declspec(noinline) static cwASIOError cwASIOStart(void) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->start;
@@ -445,7 +445,7 @@ static cwASIOError cwASIOStart(void) {
     return retval;
 }
 
-static cwASIOError cwASIOStop(void) {
+__declspec(noinline) static cwASIOError cwASIOStop(void) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->stop;
@@ -459,7 +459,7 @@ static cwASIOError cwASIOStop(void) {
     return retval;
 }
 
-static cwASIOError cwASIOGetChannels(long *numInputChannels, long *numOutputChannels) {
+__declspec(noinline) static cwASIOError cwASIOGetChannels(long *numInputChannels, long *numOutputChannels) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->getChannels;
@@ -475,7 +475,7 @@ static cwASIOError cwASIOGetChannels(long *numInputChannels, long *numOutputChan
     return retval;
 }
 
-static cwASIOError cwASIOGetLatencies(long *inputLatency, long *outputLatency) {
+__declspec(noinline) static cwASIOError cwASIOGetLatencies(long *inputLatency, long *outputLatency) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->getLatencies;
@@ -491,7 +491,7 @@ static cwASIOError cwASIOGetLatencies(long *inputLatency, long *outputLatency) {
     return retval;
 }
 
-static cwASIOError cwASIOGetBufferSize(long *minSize, long *maxSize, long *preferredSize, long *granularity) {
+__declspec(noinline) static cwASIOError cwASIOGetBufferSize(long *minSize, long *maxSize, long *preferredSize, long *granularity) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->getBufferSize;
@@ -509,7 +509,7 @@ static cwASIOError cwASIOGetBufferSize(long *minSize, long *maxSize, long *prefe
     return retval;
 }
 
-static cwASIOError cwASIOCanSampleRate(cwASIOSampleRate sampleRate) {
+__declspec(noinline) static cwASIOError cwASIOCanSampleRate(cwASIOSampleRate sampleRate) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*)  theAsioDriver->lpVtbl->canSampleRate;
@@ -527,7 +527,7 @@ static cwASIOError cwASIOCanSampleRate(cwASIOSampleRate sampleRate) {
     return retval;
 }
 
-static cwASIOError cwASIOGetSampleRate(cwASIOSampleRate *currentRate) {
+__declspec(noinline) static cwASIOError cwASIOGetSampleRate(cwASIOSampleRate *currentRate) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void* f = (void*)theAsioDriver->lpVtbl->getSampleRate;
@@ -542,7 +542,7 @@ static cwASIOError cwASIOGetSampleRate(cwASIOSampleRate *currentRate) {
     return retval;
 }
 
-static cwASIOError cwASIOSetSampleRate(cwASIOSampleRate sampleRate) {
+__declspec(noinline) static cwASIOError cwASIOSetSampleRate(cwASIOSampleRate sampleRate) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*)  theAsioDriver->lpVtbl->setSampleRate;
@@ -560,7 +560,7 @@ static cwASIOError cwASIOSetSampleRate(cwASIOSampleRate sampleRate) {
     return retval;
 }
 
-static cwASIOError cwASIOGetClockSources(struct cwASIOClockSource *clocks, long *numSources) {
+__declspec(noinline) static cwASIOError cwASIOGetClockSources(struct cwASIOClockSource *clocks, long *numSources) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->getClockSources;
@@ -576,7 +576,7 @@ static cwASIOError cwASIOGetClockSources(struct cwASIOClockSource *clocks, long 
     return retval;
 }
 
-static cwASIOError cwASIOSetClockSource(long reference) {
+__declspec(noinline) static cwASIOError cwASIOSetClockSource(long reference) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->setClockSource;
@@ -591,7 +591,7 @@ static cwASIOError cwASIOSetClockSource(long reference) {
     return retval;
 }
 
-static cwASIOError cwASIOGetSamplePosition (cwASIOSamples *sPos, cwASIOTimeStamp *tStamp) {
+__declspec(noinline) static cwASIOError cwASIOGetSamplePosition (cwASIOSamples *sPos, cwASIOTimeStamp *tStamp) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->getSamplePosition;
@@ -607,7 +607,7 @@ static cwASIOError cwASIOGetSamplePosition (cwASIOSamples *sPos, cwASIOTimeStamp
     return retval;
 }
 
-static cwASIOError cwASIOGetChannelInfo(struct cwASIOChannelInfo *info) {
+__declspec(noinline) static cwASIOError cwASIOGetChannelInfo(struct cwASIOChannelInfo *info) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->getChannelInfo;
@@ -622,7 +622,7 @@ static cwASIOError cwASIOGetChannelInfo(struct cwASIOChannelInfo *info) {
     return retval;
 }
 
-static cwASIOError cwASIOCreateBuffers(struct cwASIOBufferInfo *bufferInfos, long numChannels, long bufferSize, struct cwASIOCallbacks const *callbacks) {
+__declspec(noinline) static cwASIOError cwASIOCreateBuffers(struct cwASIOBufferInfo *bufferInfos, long numChannels, long bufferSize, struct cwASIOCallbacks const *callbacks) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->createBuffers;
@@ -640,7 +640,7 @@ static cwASIOError cwASIOCreateBuffers(struct cwASIOBufferInfo *bufferInfos, lon
     return retval;
 }
 
-static cwASIOError cwASIODisposeBuffers(void) {
+__declspec(noinline) static cwASIOError cwASIODisposeBuffers(void) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->disposeBuffers;
@@ -654,7 +654,7 @@ static cwASIOError cwASIODisposeBuffers(void) {
     return retval;
 }
 
-static cwASIOError cwASIOControlPanel(void) {
+__declspec(noinline) static cwASIOError cwASIOControlPanel(void) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->controlPanel;
@@ -668,7 +668,7 @@ static cwASIOError cwASIOControlPanel(void) {
     return retval;
 }
 
-static cwASIOError cwASIOFuture(long selector, void *params) {
+__declspec(noinline) static cwASIOError cwASIOFuture(long selector, void *params) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->future;
@@ -684,7 +684,7 @@ static cwASIOError cwASIOFuture(long selector, void *params) {
     return retval;
 }
 
-static cwASIOError cwASIOOutputReady(void) {
+__declspec(noinline) static cwASIOError cwASIOOutputReady(void) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->outputReady;
@@ -699,7 +699,7 @@ static cwASIOError cwASIOOutputReady(void) {
 }
 #elif INTPTR_MAX != INT64_MAX && defined(_WIN32) && defined(__GNUC__)
 /* 32 bit Windows platform and GCC compiler */
-static cwASIOError cwASIOInit(cwASIODriverInfo *info) {
+static __attribute__((noinline)) cwASIOError cwASIOInit(cwASIODriverInfo *info) {
     if(!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     {
@@ -757,7 +757,7 @@ static cwASIOError cwASIOInit(cwASIODriverInfo *info) {
     return ASE_OK;
 }
 
-static cwASIOError cwASIOStart(void) {
+static __attribute__((noinline)) cwASIOError cwASIOStart(void) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->start;
@@ -770,7 +770,7 @@ static cwASIOError cwASIOStart(void) {
     return retval;
 }
 
-static cwASIOError cwASIOStop(void) {
+static __attribute__((noinline)) cwASIOError cwASIOStop(void) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->stop;
@@ -783,7 +783,7 @@ static cwASIOError cwASIOStop(void) {
     return retval;
 }
 
-static cwASIOError cwASIOGetChannels(long *numInputChannels, long *numOutputChannels) {
+static __attribute__((noinline)) cwASIOError cwASIOGetChannels(long *numInputChannels, long *numOutputChannels) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->getChannels;
@@ -798,7 +798,7 @@ static cwASIOError cwASIOGetChannels(long *numInputChannels, long *numOutputChan
     return retval;
 }
 
-static cwASIOError cwASIOGetLatencies(long *inputLatency, long *outputLatency) {
+static __attribute__((noinline)) cwASIOError cwASIOGetLatencies(long *inputLatency, long *outputLatency) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->getLatencies;
@@ -813,7 +813,7 @@ static cwASIOError cwASIOGetLatencies(long *inputLatency, long *outputLatency) {
     return retval;
 }
 
-static cwASIOError cwASIOGetBufferSize(long *minSize, long *maxSize, long *preferredSize, long *granularity) {
+static __attribute__((noinline)) cwASIOError cwASIOGetBufferSize(long *minSize, long *maxSize, long *preferredSize, long *granularity) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->getBufferSize;
@@ -830,7 +830,7 @@ static cwASIOError cwASIOGetBufferSize(long *minSize, long *maxSize, long *prefe
     return retval;
 }
 
-static cwASIOError cwASIOCanSampleRate(cwASIOSampleRate sampleRate) {
+static __attribute__((noinline)) cwASIOError cwASIOCanSampleRate(cwASIOSampleRate sampleRate) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*)  theAsioDriver->lpVtbl->canSampleRate;
@@ -846,7 +846,7 @@ static cwASIOError cwASIOCanSampleRate(cwASIOSampleRate sampleRate) {
     return retval;
 }
 
-static cwASIOError cwASIOGetSampleRate(cwASIOSampleRate *currentRate) {
+static __attribute__((noinline)) cwASIOError cwASIOGetSampleRate(cwASIOSampleRate *currentRate) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->getErrorMessage;
@@ -859,7 +859,7 @@ static cwASIOError cwASIOGetSampleRate(cwASIOSampleRate *currentRate) {
     return retval;
 }
 
-static cwASIOError cwASIOSetSampleRate(cwASIOSampleRate sampleRate) {
+static __attribute__((noinline)) cwASIOError cwASIOSetSampleRate(cwASIOSampleRate sampleRate) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*)  theAsioDriver->lpVtbl->setSampleRate;
@@ -875,7 +875,7 @@ static cwASIOError cwASIOSetSampleRate(cwASIOSampleRate sampleRate) {
     return retval;
 }
 
-static cwASIOError cwASIOGetClockSources(cwASIOClockSource *clocks, long *numSources) {
+static __attribute__((noinline)) cwASIOError cwASIOGetClockSources(cwASIOClockSource *clocks, long *numSources) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->getChannels;
@@ -890,7 +890,7 @@ static cwASIOError cwASIOGetClockSources(cwASIOClockSource *clocks, long *numSou
     return retval;
 }
 
-static cwASIOError cwASIOSetClockSource(long reference) {
+static __attribute__((noinline)) cwASIOError cwASIOSetClockSource(long reference) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->setClockSource;
@@ -904,7 +904,7 @@ static cwASIOError cwASIOSetClockSource(long reference) {
     return retval;
 }
 
-static cwASIOError cwASIOGetSamplePosition (cwASIOSamples *sPos, cwASIOTimeStamp *tStamp) {
+static __attribute__((noinline)) cwASIOError cwASIOGetSamplePosition (cwASIOSamples *sPos, cwASIOTimeStamp *tStamp) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->getSamplePosition;
@@ -919,7 +919,7 @@ static cwASIOError cwASIOGetSamplePosition (cwASIOSamples *sPos, cwASIOTimeStamp
     return retval;
 }
 
-static cwASIOError cwASIOGetChannelInfo(cwASIOChannelInfo *info) {
+static __attribute__((noinline)) cwASIOError cwASIOGetChannelInfo(cwASIOChannelInfo *info) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->getChannelInfo;
@@ -933,7 +933,7 @@ static cwASIOError cwASIOGetChannelInfo(cwASIOChannelInfo *info) {
     return retval;
 }
 
-static cwASIOError cwASIOCreateBuffers(cwASIOBufferInfo *bufferInfos, long numChannels, long bufferSize, cwASIOCallbacks const *callbacks) {
+static __attribute__((noinline)) cwASIOError cwASIOCreateBuffers(cwASIOBufferInfo *bufferInfos, long numChannels, long bufferSize, cwASIOCallbacks const *callbacks) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->createBuffers;
@@ -960,7 +960,7 @@ static cwASIOError cwASIOCreateBuffers(cwASIOBufferInfo *bufferInfos, long numCh
     return retval;
 }
 
-static cwASIOError cwASIODisposeBuffers(void) {
+static __attribute__((noinline)) cwASIOError cwASIODisposeBuffers(void) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->disposeBuffers;
@@ -973,7 +973,7 @@ static cwASIOError cwASIODisposeBuffers(void) {
     return retval;
 }
 
-static cwASIOError cwASIOControlPanel(void) {
+static __attribute__((noinline)) cwASIOError cwASIOControlPanel(void) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->controlPanel;
@@ -986,7 +986,7 @@ static cwASIOError cwASIOControlPanel(void) {
     return retval;
 }
 
-static cwASIOError cwASIOFuture(long selector, void *params) {
+static __attribute__((noinline)) cwASIOError cwASIOFuture(long selector, void *params) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->future;
@@ -1001,7 +1001,7 @@ static cwASIOError cwASIOFuture(long selector, void *params) {
     return retval;
 }
 
-static cwASIOError cwASIOOutputReady(void) {
+static __attribute__((noinline)) cwASIOError cwASIOOutputReady(void) {
     if (!theAsioDriver || !theAsioDriver->lpVtbl)
         return ASE_NotPresent;
     void *f = (void*) theAsioDriver->lpVtbl->outputReady;
