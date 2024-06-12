@@ -245,7 +245,7 @@ static DWORD getLastError()
 #if _WINDOWS
     return GetLastError();
 #else
-    DWORD result = DWORD(errno);
+    DWORD result = (DWORD) errno;
     return result;
 #endif
 }
