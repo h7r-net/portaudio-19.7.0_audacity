@@ -92,7 +92,7 @@
 #else
     #include <time.h>
     #include <unistd.h>
-    typedef u_int32_t DWORD;
+    typedef uint32_t DWORD;
 #endif
 
 #include "pevents.h"
@@ -130,6 +130,15 @@
 /* prototypes for functions declared in this file */
 
 PaError PaCwAsio_Initialize( PaUtilHostApiRepresentation **hostApi, PaHostApiIndex hostApiIndex );
+PaError PaCwAsio_GetAvailableBufferSizes( PaDeviceIndex device,
+                                          long* minBufferSizeFrames,
+                                          long* maxBufferSizeFrames,
+                                          long* preferredBufferSizeFrames,
+                                          long* granularity );
+PaError PaCwAsio_ShowControlPanel( PaDeviceIndex device, void* systemSpecific );
+PaError PaCwAsio_GetInputChannelName( PaDeviceIndex device, int channelIndex, const char** channelName );
+PaError PaCwAsio_GetOutputChannelName( PaDeviceIndex device, int channelIndex, const char** channelName );
+PaError PaCwAsio_SetStreamSampleRate( PaStream* stream, double sampleRate );
 static void Terminate( struct PaUtilHostApiRepresentation *hostApi );
 static PaError OpenStream( struct PaUtilHostApiRepresentation *hostApi,
                            PaStream** s,
@@ -185,29 +194,28 @@ static struct cwASIOCallbacks asioCallbacks_ =
     #define paCwAsioUseChannelSelectors paAsioUseChannelSelectors
     #define PaCwAsio_GetAvailableLatencyValues PaAsio_GetAvailableBufferSizes
 
-    PaError PaAsio_Initialize(PaUtilHostApiRepresentation** hostApi, PaHostApiIndex hostApiIndex) {
+    PaError PaAsio_Initialize( PaUtilHostApiRepresentation** hostApi, PaHostApiIndex hostApiIndex ) {
         return PaCwAsio_Initialize(hostApi, hostApiIndex);
     }
 
-
-    PaError PaAsio_GetAvailableBufferSizes(PaDeviceIndex device,
-        long* minBufferSizeFrames, long* maxBufferSizeFrames, long* preferredBufferSizeFrames, long* granularity) {
+    PaError PaAsio_GetAvailableBufferSizes( PaDeviceIndex device,
+        long* minBufferSizeFrames, long* maxBufferSizeFrames, long* preferredBufferSizeFrames, long* granularity ) {
         return PaCwAsio_GetAvailableBufferSizes(device, minBufferSizeFrames, maxBufferSizeFrames, preferredBufferSizeFrames, granularity);
     }
 
-    PaError PaAsio_ShowControlPanel(PaDeviceIndex device, void* systemSpecific) {
+    PaError PaAsio_ShowControlPanel( PaDeviceIndex device, void* systemSpecific ) {
         return PaCwAsio_ShowControlPanel(device, systemSpecific);
     }
 
-    PaError PaAsio_GetInputChannelName(PaDeviceIndex device, int channelIndex, const char** channelName) {
+    PaError PaAsio_GetInputChannelName( PaDeviceIndex device, int channelIndex, const char** channelName ) {
         return PaCwAsio_GetInputChannelName(device, channelIndex, channelName);
     }
 
-    PaError PaAsio_GetOutputChannelName(PaDeviceIndex device, int channelIndex, const char** channelName) {
+    PaError PaAsio_GetOutputChannelName( PaDeviceIndex device, int channelIndex, const char** channelName ) {
         return PaCwAsio_GetOutputChannelName(device, channelIndex, channelName);
     }
 
-    PaError PaAsio_SetStreamSampleRate(PaStream* stream, double sampleRate) {
+    PaError PaAsio_SetStreamSampleRate( PaStream* stream, double sampleRate ) {
         return PaCwAsio_SetStreamSampleRate(stream, sampleRate);
     }
 #endif
@@ -4437,9 +4445,9 @@ static PaTime GetStreamTime( PaStream *s )
 #if WINDOWS
     return (double)timeGetTime() * .001;
 #else
-    struct timespec tp{ 0 };
+    struct timespec tp = { 0 };
     clock_gettime( CLOCK_MONOTONIC, &tp );
-    return double(tp.tv_sec) + double(tp.tv_nsec) * .000000001;
+    return (double) tp.tv_sec + (double) tp.tv_nsec * .000000001;
 #endif
 }
 
